@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd c:/Users/USUARIO/Desktop/IAS/CLAUDE/MYTHOS && mkdir -p src/components src/routes src/assets)",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(npm view *)",
+      "Bash(npx vinxi *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(node -e \"const p = require\\('@tanstack/react-start/package.json'\\); console.log\\(JSON.stringify\\(p.exports, null, 2\\)\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(node --input-type=module -e ' *)",
+      "Bash(npm ls *)",
+      "Bash(npm run *)",
+      "Bash(npx vite *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)",
+      "Bash(curl -s http://localhost:5174)",
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(taskkill /f /im node.exe)",
+      "Bash(curl -s http://localhost:3000)",
+      "WebSearch",
+      "WebFetch(domain:tanstack.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl -s http://localhost:3005)",
+      "Bash(curl -s --compressed http://localhost:3005)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://qclay.design/lovable/valmax/photo-ralph-portrait.png\")",
+      "Bash(rm -rf node_modules/.vite)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(head -5 src/routeTree.gen.ts)",
+      "Bash(taskkill /f /fi \"PID gt 0\" /im node.exe)",
+      "Bash(curl -s --compressed http://localhost:3000)",
+      "Bash(curl -s --compressed http://localhost:3007)",
+      "Bash(taskkill //f //im node.exe)",
+      "Bash(tasklist //fi \"IMAGENAME eq node.exe\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\USUARIO\\Desktop\\IAS\\CLAUDE\\MYTHOS\\src"
+    ]
+  }
+}
