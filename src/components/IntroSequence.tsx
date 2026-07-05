@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { LazyMotion, m, domAnimation } from 'framer-motion'
+import logo from '@/assets/logo.svg'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
-const ASSETS_BASE = 'https://qclay.design/lovable/valmax/'
 const TOTAL_MS = 3600
 const TOTAL_S = TOTAL_MS / 1000
 
@@ -11,7 +11,7 @@ const rayAngles = [0, 30, 60, 120, 150, 210, 240, 300, 330]
 function LogoImage({ onLoad, onError }: { onLoad?: () => void; onError?: () => void }) {
   return (
     <img
-      src={`${ASSETS_BASE}logo.svg`}
+      src={logo}
       alt="VALMAX"
       width={268}
       height={64}

@@ -5,8 +5,30 @@ import IntroSequence from './IntroSequence'
 import StarField from './StarField'
 import LineField from './LineField'
 
+/* ─── assets locais ─── */
+import noise from '@/assets/noise.png'
+import ellipseArc from '@/assets/ellipse-arc.png'
+import bgFabric from '@/assets/bg-fabric.png'
+import bgSilhouettes from '@/assets/bg-silhouettes.png'
+import bgNikon from '@/assets/bg-nikon.png'
+import getInTouchBg from '@/assets/get-in-touch-bg.png'
+import vectorArrow from '@/assets/Vector.svg'
+import logo from '@/assets/logo.svg'
+import photoRalphPortrait from '@/assets/photo-ralph-portrait.png'
+import photoCamera from '@/assets/photo-camera.png'
+import photoFieldsBw from '@/assets/photo-fields-bw.png'
+import photoBerries from '@/assets/photo-berries.png'
+import photoBasketball from '@/assets/photo-basketball.png'
+import photoRed from '@/assets/photo-red.png'
+import photoHat from '@/assets/photo-hat.png'
+import photoSculptureBw from '@/assets/photo-sculpture-bw.png'
+import photoTwins from '@/assets/photo-twins.png'
+import photoCar from '@/assets/photo-car.png'
+import photoFieldsColor from '@/assets/photo-fields-color.png'
+import photoGirlGrass from '@/assets/photo-girl-grass.png'
+import photoSculptureColor from '@/assets/photo-sculpture-color.png'
+
 /* ─── constants ─── */
-const ASSETS_BASE = 'https://qclay.design/lovable/valmax/'
 const INTRO_DELAY = 2.9
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 const MATTE = 'bg-[oklch(0.16_0.004_240)]'
@@ -108,7 +130,7 @@ function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean
             <span className="font-display font-black text-white text-xl">VALMAX</span>
           ) : (
             <img
-              src={`${ASSETS_BASE}logo.svg`}
+              src={logo}
               alt="VALMAX"
               className="h-6 w-auto"
               onError={() => setLogoFailed(true)}
@@ -256,13 +278,13 @@ interface HeroCard {
 }
 
 const heroCards: HeroCard[] = [
-  { src: 'photo-fields-bw.png', alt: 'Fields', pos: { top: '2%', left: '34%' }, size: { w: 150, aspect: '4/3' }, depth: 18, badge: 'ig' },
-  { src: 'photo-berries.png', alt: 'Berries', pos: { top: '2%', right: '2%' }, size: { w: 260, aspect: '16/9' }, depth: 22 },
-  { src: 'photo-basketball.png', alt: 'Athlete', pos: { top: '7%', left: '4%' }, size: { w: 110, aspect: '3/4' }, depth: 28, badge: 'ig' },
-  { src: 'photo-red.png', alt: 'Portrait red', pos: { top: '10%', right: '12%' }, size: { w: 200, aspect: '3/4' }, depth: 26, badge: 'pin', overlay: true },
-  { src: 'photo-hat.png', alt: 'Hat', pos: { top: '18%', left: '3%' }, size: { w: 220, aspect: '3/4' }, depth: 20, badge: 'ig' },
-  { src: 'photo-sculpture-bw.png', alt: 'Sculpture', pos: { bottom: 'calc(6%-10px)', left: 'calc(34%-90px)' }, size: { w: 160, aspect: '4/5' }, depth: 24, badge: 'pin' },
-  { src: 'photo-twins.png', alt: 'Twins', pos: { bottom: '6%', right: '22%' }, size: { w: 230, aspect: '16/10' }, depth: 22 },
+  { src: photoFieldsBw, alt: 'Fields', pos: { top: '2%', left: '34%' }, size: { w: 150, aspect: '4/3' }, depth: 18, badge: 'ig' },
+  { src: photoBerries, alt: 'Berries', pos: { top: '2%', right: '2%' }, size: { w: 260, aspect: '16/9' }, depth: 22 },
+  { src: photoBasketball, alt: 'Athlete', pos: { top: '7%', left: '4%' }, size: { w: 110, aspect: '3/4' }, depth: 28, badge: 'ig' },
+  { src: photoRed, alt: 'Portrait red', pos: { top: '10%', right: '12%' }, size: { w: 200, aspect: '3/4' }, depth: 26, badge: 'pin', overlay: true },
+  { src: photoHat, alt: 'Hat', pos: { top: '18%', left: '3%' }, size: { w: 220, aspect: '3/4' }, depth: 20, badge: 'ig' },
+  { src: photoSculptureBw, alt: 'Sculpture', pos: { bottom: 'calc(6%-10px)', left: 'calc(34%-90px)' }, size: { w: 160, aspect: '4/5' }, depth: 24, badge: 'pin' },
+  { src: photoTwins, alt: 'Twins', pos: { bottom: '6%', right: '22%' }, size: { w: 230, aspect: '16/10' }, depth: 22 },
 ]
 
 /* ─── RalphHero ─── */
@@ -294,19 +316,19 @@ function RalphHero() {
       <StarField count={700} className="absolute inset-0 pointer-events-none" />
       <LineField variant="hero" />
       <DecorativeImg
-        src={`${ASSETS_BASE}noise.png`}
+        src={noise}
         className="absolute inset-0 w-full h-full object-cover opacity-[0.12] mix-blend-overlay"
         style={{ zIndex: 1 }}
       />
 
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <DecorativeImg
-          src={`${ASSETS_BASE}ellipse-arc.png`}
+          src={ellipseArc}
           className="absolute opacity-50"
           style={{ width: 1500, top: '10%', left: '50%', transform: 'translateX(-78%)' }}
         />
         <DecorativeImg
-          src={`${ASSETS_BASE}ellipse-arc.png`}
+          src={ellipseArc}
           className="absolute opacity-50"
           style={{ width: 1500, top: '10%', left: '50%', transform: 'translateX(-22%)' }}
         />
@@ -358,7 +380,7 @@ function RalphHero() {
             custom={i}
           >
             <PhotoImg
-              src={`${ASSETS_BASE}${card.src}`}
+              src={card.src}
               alt={card.alt}
               className="w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
               style={{ aspectRatio: card.size.aspect }}
@@ -379,7 +401,7 @@ function OurPhotographer() {
       <StarField count={500} className="absolute inset-0 pointer-events-none" />
       <LineField variant="photographer" />
       <DecorativeImg
-        src={`${ASSETS_BASE}noise.png`}
+        src={noise}
         className="absolute inset-0 w-full h-full object-cover opacity-[0.12] mix-blend-overlay"
         style={{ zIndex: 1 }}
       />
@@ -391,17 +413,17 @@ function OurPhotographer() {
 
       <div className="absolute inset-0 pointer-events-none select-none" style={{ zIndex: 1 }}>
         <DecorativeImg
-          src={`${ASSETS_BASE}bg-fabric.png`}
+          src={bgFabric}
           className="absolute opacity-[0.13]"
           style={{ left: 0, top: '33.33%', width: 280, maxWidth: 'none' }}
         />
         <DecorativeImg
-          src={`${ASSETS_BASE}bg-silhouettes.png`}
+          src={bgSilhouettes}
           className="absolute opacity-[0.16]"
           style={{ right: 0, top: '12%', width: 360, maxWidth: 'none' }}
         />
         <DecorativeImg
-          src={`${ASSETS_BASE}bg-nikon.png`}
+          src={bgNikon}
           className="absolute opacity-[0.14]"
           style={{ right: '4%', bottom: 0, width: 280, maxWidth: 'none' }}
         />
@@ -427,7 +449,7 @@ function OurPhotographer() {
           </m.h2>
 
           <PhotoImg
-            src={`${ASSETS_BASE}photo-ralph-portrait.png`}
+            src={photoRalphPortrait}
             alt="Ralph Edwards portrait"
             className="w-full aspect-[3/4] object-cover"
           />
@@ -478,10 +500,10 @@ function OurPhotographer() {
 /* ─── AllTypes ─── */
 function AllTypes() {
   const projects = [
-    { src: 'photo-car.png', alt: 'Company Photo', aspect: '4/5' as const, widthClass: 'w-[216px]', mtClass: 'md:mt-20' },
-    { src: 'photo-fields-color.png', alt: 'Landscape Series', aspect: '3/4' as const, widthClass: 'w-[220px]', mtClass: 'md:mt-[6.25rem]' },
-    { src: 'photo-girl-grass.png', alt: 'Classy Photo Shoot', aspect: '4/5' as const, widthClass: 'w-[230px]', mtClass: 'md:mt-10' },
-    { src: 'photo-sculpture-color.png', alt: 'Photo Brand', aspect: '4/5' as const, widthClass: 'w-[200px]', mtClass: 'md:mt-4' },
+    { src: photoCar, alt: 'Company Photo', aspect: '4/5' as const, widthClass: 'w-[216px]', mtClass: 'md:mt-20' },
+    { src: photoFieldsColor, alt: 'Landscape Series', aspect: '3/4' as const, widthClass: 'w-[220px]', mtClass: 'md:mt-[6.25rem]' },
+    { src: photoGirlGrass, alt: 'Classy Photo Shoot', aspect: '4/5' as const, widthClass: 'w-[230px]', mtClass: 'md:mt-10' },
+    { src: photoSculptureColor, alt: 'Photo Brand', aspect: '4/5' as const, widthClass: 'w-[200px]', mtClass: 'md:mt-4' },
   ]
 
   return (
@@ -496,7 +518,7 @@ function AllTypes() {
       />
       <LineField variant="projects" />
       <DecorativeImg
-        src={`${ASSETS_BASE}noise.png`}
+        src={noise}
         className="absolute inset-0 w-full h-full object-cover opacity-[0.12] mix-blend-overlay"
         style={{ zIndex: 1 }}
       />
@@ -541,7 +563,7 @@ function AllTypes() {
           >
             <div className="overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)] group">
               <PhotoImg
-                src={`${ASSETS_BASE}${project.src}`}
+                src={project.src}
                 alt={project.alt}
                 className={`${project.widthClass} object-cover transition-transform duration-[1500ms] group-hover:scale-110`}
                 style={{ aspectRatio: project.aspect }}
@@ -580,7 +602,7 @@ function MechanicalMarvels() {
         <StarField count={450} className="absolute inset-0 pointer-events-none" />
         <LineField variant="marvels" />
         <DecorativeImg
-          src={`${ASSETS_BASE}noise.png`}
+          src={noise}
           className="absolute inset-0 w-full h-full object-cover opacity-[0.12] mix-blend-overlay"
           style={{ zIndex: 1 }}
         />
@@ -596,7 +618,7 @@ function MechanicalMarvels() {
             Mechanical{' '}
             <span className="inline-flex items-center align-middle mx-1">
               <PhotoImg
-                src={`${ASSETS_BASE}photo-camera.png`}
+                src={photoCamera}
                 alt="Camera"
                 className="h-10 md:h-20 w-auto rounded-md"
               />
@@ -623,7 +645,7 @@ function MechanicalMarvels() {
           style={{ y: parallaxY, top: '-10%', bottom: '-10%', height: '120%' }}
         >
           <img
-            src={`${ASSETS_BASE}get-in-touch-bg.png`}
+            src={getInTouchBg}
             alt=""
             className="w-full h-full object-cover"
             aria-hidden="true"
@@ -680,7 +702,7 @@ function VectorArrow() {
   if (failed) return <ArrowUpRight className="w-[5.86px] h-[5.53px]" />
   return (
     <img
-      src={`${ASSETS_BASE}Vector.svg`}
+      src={vectorArrow}
       alt=""
       className="w-[5.86px] h-[5.53px]"
       onError={() => setFailed(true)}
