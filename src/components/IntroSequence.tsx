@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { LazyMotion, m, domAnimation } from 'framer-motion'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const ASSETS_BASE = 'https://qclay.design/lovable/valmax/'
@@ -67,7 +67,7 @@ export default function IntroSequence() {
   return (
     <div className="fixed inset-0 z-[100] pointer-events-none">
       {/* Backdrop */}
-      <motion.div
+      <m.div
         className="absolute inset-0"
         style={{ backgroundColor: 'oklch(0.16 0.004 240)' }}
         animate={{ opacity: [1, 1, 0] }}
@@ -79,7 +79,7 @@ export default function IntroSequence() {
         const size = 260 * (i + 1)
         const delay = (1220 + i * 120) / 1000
         return (
-          <motion.div
+          <m.div
             key={i}
             className="absolute rounded-full border border-white/10"
             style={{
@@ -115,7 +115,7 @@ export default function IntroSequence() {
           const x2 = 50 + 60 * Math.cos(rad)
           const y2 = 50 + 60 * Math.sin(rad)
           return (
-            <motion.line
+            <m.line
               key={i}
               x1={50}
               y1={50}
@@ -141,7 +141,7 @@ export default function IntroSequence() {
       </svg>
 
       {/* White dot */}
-      <motion.div
+      <m.div
         className="absolute rounded-full bg-white"
         style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
         animate={{
@@ -157,7 +157,7 @@ export default function IntroSequence() {
       />
 
       {/* Logo container */}
-      <motion.div
+      <m.div
         className="absolute"
         animate={{
           top: ['50%', '50%', '50%', '24px'],
@@ -179,7 +179,7 @@ export default function IntroSequence() {
           className="relative"
         >
           {/* Wordmark reveal via width clip */}
-          <motion.div
+          <m.div
             style={{ overflow: 'hidden', height: 64 }}
             animate={{
               width: [64, 64, 64, 268, 268],
@@ -198,9 +198,9 @@ export default function IntroSequence() {
             ) : (
               <LogoImage onError={() => setLogoFailed(true)} />
             )}
-          </motion.div>
+          </m.div>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   )
 }

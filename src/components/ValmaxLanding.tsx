@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { LazyMotion, m, domAnimation, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight, Instagram, MoveRight, Menu } from 'lucide-react'
 import IntroSequence from './IntroSequence'
 import StarField from './StarField'
@@ -98,7 +98,7 @@ function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean
   return (
     <header className="fixed top-0 left-0 right-0 z-50 pt-6 px-6 md:px-10">
       <div className="flex items-center justify-between gap-4">
-        <motion.a
+        <m.a
           href="#"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -114,9 +114,9 @@ function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean
               onError={() => setLogoFailed(true)}
             />
           )}
-        </motion.a>
+        </m.a>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: INTRO_DELAY - 0.2, ease: EASE }}
@@ -143,20 +143,22 @@ function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean
             </button>
           </form>
 
-          <a href="#" className="text-xs uppercase tracking-widest text-white/40 hover:text-white transition-colors">About</a>
-          <a href="#" className="text-xs uppercase tracking-widest text-white/40 hover:text-white transition-colors">Projects</a>
-          <a href="#" className="text-xs uppercase tracking-widest text-white/40 hover:text-white transition-colors">Contact</a>
+          <span className="text-xs uppercase tracking-widest text-white/40">About</span>
+          <span className="text-xs uppercase tracking-widest text-white/40">Projects</span>
+          <span className="text-xs uppercase tracking-widest text-white/40">Contact</span>
 
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(true)}
             className="text-white/80 hover:text-white transition-colors focus-visible:outline-none"
             aria-label="Open menu"
           >
             <Menu className="w-5 h-5" />
           </button>
-        </motion.div>
+        </m.div>
 
-        <motion.button
+        <m.button
+          type="button"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: INTRO_DELAY - 0.2, ease: EASE }}
@@ -165,12 +167,13 @@ function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean
           aria-label="Open menu"
         >
           <Menu className="w-6 h-6" />
-        </motion.button>
+        </m.button>
       </div>
 
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-xl pt-20 px-6 md:hidden">
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(false)}
             className="absolute top-6 right-6 text-white text-2xl focus-visible:outline-none"
             aria-label="Close menu"
@@ -179,14 +182,14 @@ function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean
           </button>
           <nav className="flex flex-col gap-6 mt-8">
             {['About', 'Projects', 'Contact'].map((label) => (
-              <a
+              <button
                 key={label}
-                href="#"
+                type="button"
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-white text-lg font-medium transition-colors hover:text-white/70"
               >
                 {label}
-              </a>
+              </button>
             ))}
           </nav>
           <form
@@ -211,10 +214,10 @@ function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean
           </form>
           <div className="mt-2 px-4 py-3 border-t border-white/10 flex items-center justify-between text-xs text-white/50">
             <span>Follow</span>
-            <a href="#" className="flex items-center gap-1 hover:text-white transition-colors">
+            <span className="flex items-center gap-1 text-white/50">
               Instagram
               <Instagram className="w-3.5 h-3.5" />
-            </a>
+            </span>
           </div>
         </div>
       )}
@@ -316,7 +319,7 @@ function RalphHero() {
 
       <div className="relative z-10 grid place-items-center min-h-[80vh] px-6 text-center">
         <div className="max-w-2xl">
-          <motion.h1
+          <m.h1
             className="font-display font-black text-7xl md:text-[110px] leading-[0.95] tracking-tight"
             variants={blurIn}
             initial="hidden"
@@ -326,8 +329,8 @@ function RalphHero() {
             RALPH
             <br />
             EDWARDS
-          </motion.h1>
-          <motion.p
+          </m.h1>
+          <m.p
             className="mt-8 text-white/55 text-base md:text-[15px] leading-relaxed max-w-md mx-auto"
             variants={blurIn}
             initial="hidden"
@@ -335,14 +338,14 @@ function RalphHero() {
             custom={3}
           >
             Crafting digital experiences that captivate and inspire. Elevating your brand through design and innovation.
-          </motion.p>
+          </m.p>
         </div>
       </div>
 
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 20 }}>
         {heroCards.map((card, i) => (
-          <motion.div
-            key={i}
+          <m.div
+            key={card.src}
             className="absolute overflow-hidden shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/10 group pointer-events-auto"
             style={{
               ...card.pos,
@@ -362,7 +365,7 @@ function RalphHero() {
             />
             {card.badge && <Badge type={card.badge} />}
             {card.overlay && <ViewAlbumOverlay />}
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>
@@ -405,14 +408,14 @@ function OurPhotographer() {
       </div>
 
       <div className="relative z-[2] grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto items-start">
-        <motion.div
+        <m.div
           className="relative bg-[#efeae0] p-4 pb-20 w-full max-w-[440px] justify-self-center md:justify-self-end shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)]"
           initial={{ opacity: 0, y: 60, filter: 'blur(16px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 1.2, ease: EASE }}
         >
-          <motion.h2
+          <m.h2
             className="font-display font-medium text-4xl md:text-5xl leading-[0.95] uppercase text-white whitespace-nowrap"
             style={{ position: 'absolute', top: '-4rem', left: '40rem', transform: 'translateX(-50%)' }}
             initial={{ opacity: 0, y: 30, filter: 'blur(14px)' }}
@@ -421,7 +424,7 @@ function OurPhotographer() {
             transition={{ duration: 1.1, ease: EASE }}
           >
             Our photographer
-          </motion.h2>
+          </m.h2>
 
           <PhotoImg
             src={`${ASSETS_BASE}photo-ralph-portrait.png`}
@@ -435,10 +438,10 @@ function OurPhotographer() {
               EDWARDS
             </p>
           </div>
-        </motion.div>
+        </m.div>
 
         <div className="space-y-8 max-w-xl">
-          <motion.h2
+          <m.h2
             className="font-display font-medium text-4xl md:text-5xl leading-[1.05] uppercase"
             style={{ width: 600, marginTop: -28 }}
             initial={{ opacity: 0, y: 30, filter: 'blur(14px)' }}
@@ -451,8 +454,8 @@ function OurPhotographer() {
             best images and ideas
             <br />
             for you
-          </motion.h2>
-          <motion.div
+          </m.h2>
+          <m.div
             className="space-y-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -465,7 +468,7 @@ function OurPhotographer() {
             <p className="text-white/55 text-[15px] leading-relaxed">
               Alice&apos;s love for storytelling began in her childhood. She would spend hours in her attic, surrounded by dusty old books, dreaming up adventures for her imaginary friends. As she grew older, her passion for writing only intensified. She studied literature at university, honing her craft and delving deeper into the mysteries of storytelling.
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -499,7 +502,7 @@ function AllTypes() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
-        <motion.h2
+        <m.h2
           className="font-display font-black text-5xl md:text-6xl uppercase leading-[0.95]"
           initial={{ opacity: 0, y: 30, filter: 'blur(14px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -509,8 +512,8 @@ function AllTypes() {
           All types of
           <br />
           projects
-        </motion.h2>
-        <motion.div
+        </m.h2>
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -519,20 +522,17 @@ function AllTypes() {
           <p className="text-white/55 text-[15px] max-w-md leading-relaxed">
             Welcome to the Innovation Hub: Where Ideas Take Shape. Explore the Intersection of Creativity and Technology. Dive Into Our Portfolio and Witness the Power of Ingenuity.
           </p>
-          <a
-            href="#"
-            className="group mt-6 inline-flex items-center gap-3 text-sm uppercase tracking-widest text-white/70 hover:text-white transition-colors"
-          >
+          <span className="group mt-6 inline-flex items-center gap-3 text-sm uppercase tracking-widest text-white/70">
             View the artwork
             <MoveRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
-        </motion.div>
+          </span>
+        </m.div>
       </div>
 
       <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-start max-w-7xl mx-auto">
         {projects.map((project, i) => (
-          <motion.div
-            key={i}
+          <m.div
+            key={project.src}
             className={`flex flex-col items-center ${project.mtClass}`}
             initial={{ opacity: 0, y: 40, filter: 'blur(12px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -558,7 +558,7 @@ function AllTypes() {
                 </span>
               </span>
             </div>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>
@@ -586,7 +586,7 @@ function MechanicalMarvels() {
         />
 
         <div className="relative z-10">
-          <motion.h2
+          <m.h2
             className="font-display font-medium uppercase text-5xl md:text-[90px] leading-[0.95] tracking-tight max-w-[1200px]"
             initial={{ opacity: 0, y: 40, filter: 'blur(16px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -602,23 +602,23 @@ function MechanicalMarvels() {
               />
             </span>{' '}
             Marvels: Unveiling the artistry of automation
-          </motion.h2>
+          </m.h2>
 
           <div className="flex justify-between items-center mt-16 text-xs uppercase tracking-widest text-white/50">
-            <a href="#" className="group inline-flex items-center gap-2 hover:text-white transition-colors">
+            <span className="inline-flex items-center gap-2">
               View the artwork
-              <MoveRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" style={{ rotate: '-45deg' }} />
-            </a>
-            <a href="#" className="group inline-flex items-center gap-2 hover:text-white transition-colors">
+              <MoveRight className="w-3.5 h-3.5" style={{ rotate: '-45deg' }} />
+            </span>
+            <span className="inline-flex items-center gap-2">
               Scroll to view more
-              <MoveRight className="w-3.5 h-3.5 transition-transform group-hover:translate-y-1" style={{ rotate: '90deg' }} />
-            </a>
+              <MoveRight className="w-3.5 h-3.5" style={{ rotate: '90deg' }} />
+            </span>
           </div>
         </div>
       </div>
 
       <div ref={bottomRef} className="relative h-[80vh] overflow-hidden">
-        <motion.div
+        <m.div
           className="absolute inset-0"
           style={{ y: parallaxY, top: '-10%', bottom: '-10%', height: '120%' }}
         >
@@ -628,14 +628,14 @@ function MechanicalMarvels() {
             className="w-full h-full object-cover"
             aria-hidden="true"
           />
-        </motion.div>
+        </m.div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/20 pointer-events-none" />
 
         <LineField variant="marvelsBottom" />
 
         <div className="relative h-full grid place-items-center px-6 text-center">
           <div>
-            <motion.h3
+            <m.h3
               className="font-display font-black uppercase text-4xl md:text-7xl leading-[1] tracking-tight"
               initial={{ opacity: 0, y: 40, filter: 'blur(16px)' }}
               whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -645,9 +645,9 @@ function MechanicalMarvels() {
               Get in touch to our
               <br />
               <span className="text-lime">Modern maintenance.</span>
-            </motion.h3>
+            </m.h3>
             <div className="flex items-center justify-center gap-1">
-              <motion.a
+              <m.a
                 href="#"
                 className="mt-10 inline-flex bg-white text-black rounded-full px-6 py-2 text-sm font-medium uppercase hover:bg-white/90 transition-colors"
                 initial={{ opacity: 0, y: 20 }}
@@ -656,17 +656,17 @@ function MechanicalMarvels() {
                 transition={{ duration: 1, delay: 0.3, ease: EASE }}
               >
                 GET IN TOUCH
-              </motion.a>
-              <motion.div
+              </m.a>
+              <m.div
                 className="rounded-full border border-white flex items-center justify-center"
                 style={{ width: 18.86, height: 18.53, marginTop: '4rem' }}
-                initial={{ opacity: 0, scale: 0 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5, ease: EASE }}
               >
                 <VectorArrow />
-              </motion.div>
+              </m.div>
             </div>
           </div>
         </div>
@@ -694,9 +694,9 @@ function Footer() {
   return (
     <footer className="relative border-t border-white/10 px-6 md:px-12 py-6 flex items-center justify-between text-xs text-white/40">
       <span>All right reserved — 2024</span>
-      <a href="#" className="hover:text-white transition-colors">
+      <span className="text-white/40">
         Privacy Policy
-      </a>
+      </span>
     </footer>
   )
 }
@@ -707,13 +707,15 @@ export default function ValmaxLanding() {
 
   return (
     <div className="min-h-screen">
-      <IntroSequence />
-      <TopBar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-      <RalphHero />
-      <OurPhotographer />
-      <AllTypes />
-      <MechanicalMarvels />
-      <Footer />
+      <LazyMotion features={domAnimation}>
+        <IntroSequence />
+        <TopBar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+        <RalphHero />
+        <OurPhotographer />
+        <AllTypes />
+        <MechanicalMarvels />
+        <Footer />
+      </LazyMotion>
     </div>
   )
 }

@@ -58,6 +58,7 @@ export default function StarField({
     let animId = 0
 
     function resize() {
+      if (!canvas || !ctx) return
       const parent = canvas.parentElement
       if (!parent) return
       const w = parent.clientWidth
@@ -121,6 +122,7 @@ export default function StarField({
     if (parent) ro.observe(parent)
 
     function draw() {
+      if (!canvas || !ctx) return
       const parent = canvas.parentElement
       if (!parent) return
       const w = parent.clientWidth

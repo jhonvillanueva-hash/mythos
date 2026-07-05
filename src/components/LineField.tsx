@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { LazyMotion, m, domAnimation } from 'framer-motion'
 
 type Variant = 'hero' | 'photographer' | 'projects' | 'marvels' | 'marvelsBottom'
 
@@ -88,8 +88,8 @@ export default function LineField({ variant = 'hero' }: LineFieldProps) {
       aria-hidden="true"
     >
       {config.lines.map(([x1, y1, x2, y2], i) => (
-        <motion.line
-          key={i}
+        <m.line
+          key={`${x1},${y1},${x2},${y2}`}
           x1={x1}
           y1={y1}
           x2={x2}
@@ -113,16 +113,16 @@ export default function LineField({ variant = 'hero' }: LineFieldProps) {
       ))}
 
       {withMarkers &&
-        config.marker.map((m, i) => {
-          const [x1, y1, x2, y2] = config.lines[m.lineIndex]
-          const mx = x1 + (x2 - x1) * m.t
-          const my = y1 + (y2 - y1) * m.t
+        config.marker!.map((marker, i) => {
+          const [x1, y1, x2, y2] = config.lines[marker.lineIndex]
+          const mx = x1 + (x2 - x1) * marker.t
+          const my = y1 + (y2 - y1) * marker.t
 
-          const labelParts = m.label.split(' ')
+          const labelParts = marker.label.split(' ')
           return (
-            <motion.g
-              key={i}
-              initial={{ opacity: 0, scale: 0 }}
+            <m.g
+              key={`marker-${marker.lineIndex}-${marker.t}`}
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{
@@ -148,7 +148,7 @@ export default function LineField({ variant = 'hero' }: LineFieldProps) {
                   </tspan>
                 ))}
               </text>
-            </motion.g>
+            </m.g>
           )
         })}
     </svg>

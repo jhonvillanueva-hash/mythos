@@ -32,10 +32,17 @@
       "Bash(curl -s --compressed http://localhost:3000)",
       "Bash(curl -s --compressed http://localhost:3007)",
       "Bash(taskkill //f //im node.exe)",
-      "Bash(tasklist //fi \"IMAGENAME eq node.exe\")"
+      "Bash(tasklist //fi \"IMAGENAME eq node.exe\")",
+      "Bash(cat \"C:/Users/USUARIO/AppData/Local/Temp/react-doctor-2a769617-ca81-47ca-b96d-47f045435f58/diagnostics.json\" 2>/dev/null | head -100)",
+      "Read(//c/Users/USUARIO/AppData/Local/Temp/react-doctor-2a769617-ca81-47ca-b96d-47f045435f58/**)",
+      "WebFetch(domain:react.doctor)",
+      "Bash(rm -f vite.config.timestamp_*.js app.config.timestamp_*.js 2>/dev/null; echo \"cleaned\")",
+      "Bash(npx react-doctor@latest --verbose)",
+      "Bash(npx tsc *)"
     ],
     "additionalDirectories": [
-      "c:\\Users\\USUARIO\\Desktop\\IAS\\CLAUDE\\MYTHOS\\src"
+      "c:\\Users\\USUARIO\\Desktop\\IAS\\CLAUDE\\MYTHOS\\src",
+      "C:\\Users\\USUARIO\\Desktop\\IAS\\CLAUDE\\MYTHOS"
     ]
   }
 }
