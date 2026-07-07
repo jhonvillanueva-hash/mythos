@@ -54,7 +54,11 @@
       "Bash(curl -s -o \"photo-car.png\" \"https://qclay.design/lovable/valmax/photo-car.png\")",
       "Bash(curl -s -o \"photo-fields-color.png\" \"https://qclay.design/lovable/valmax/photo-fields-color.png\")",
       "Bash(curl -s -o \"photo-girl-grass.png\" \"https://qclay.design/lovable/valmax/photo-girl-grass.png\")",
-      "Bash(curl -s -o \"photo-sculpture-color.png\" \"https://qclay.design/lovable/valmax/photo-sculpture-color.png\")"
+      "Bash(curl -s -o \"photo-sculpture-color.png\" \"https://qclay.design/lovable/valmax/photo-sculpture-color.png\")",
+      "Bash(dev-browser *)",
+      "Read(//c/Users/USUARIO/.dev-browser/tmp/**)",
+      "Bash(/c/Users/USUARIO/AppData/Roaming/npm/dev-browser screenshot *)",
+      "Bash(/c/Users/USUARIO/AppData/Roaming/npm/dev-browser --help)"
     ],
     "additionalDirectories": [
       "c:\\Users\\USUARIO\\Desktop\\IAS\\CLAUDE\\MYTHOS\\src",

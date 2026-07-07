@@ -1,0 +1,1 @@
+- Debes responder siempre en español

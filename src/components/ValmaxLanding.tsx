@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { LazyMotion, m, domAnimation, useScroll, useTransform } from 'framer-motion'
-import { ArrowUpRight, Instagram, MoveRight, Menu } from 'lucide-react'
+import { ArrowUpRight, Instagram, MoveRight } from 'lucide-react'
 import IntroSequence from './IntroSequence'
+import TopBar from './TopBar'
 import StarField from './StarField'
 import LineField from './LineField'
 
@@ -29,7 +30,7 @@ import photoGirlGrass from '@/assets/photo-girl-grass.png'
 import photoSculptureColor from '@/assets/photo-sculpture-color.png'
 
 /* ─── constants ─── */
-const INTRO_DELAY = 2.9
+const INTRO_DELAY = 5.0
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 const MATTE = 'bg-[oklch(0.16_0.004_240)]'
 
@@ -101,149 +102,6 @@ function Badge({ type }: { type: 'ig' | 'pin' }) {
         </svg>
       )}
     </div>
-  )
-}
-
-/* ─── TopBar ─── */
-function TopBar({ mobileMenuOpen, setMobileMenuOpen }: { mobileMenuOpen: boolean; setMobileMenuOpen: (v: boolean) => void }) {
-  const [logoFailed, setLogoFailed] = useState(false)
-  const [email, setEmail] = useState('')
-
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault()
-      if (email) setEmail('')
-    },
-    [email],
-  )
-
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 pt-6 px-6 md:px-10">
-      <div className="flex items-center justify-between gap-4">
-        <m.a
-          href="#"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: INTRO_DELAY - 0.2, ease: EASE }}
-        >
-          {logoFailed ? (
-            <span className="font-display font-black text-white text-xl">VALMAX</span>
-          ) : (
-            <img
-              src={logo}
-              alt="VALMAX"
-              className="h-6 w-auto"
-              onError={() => setLogoFailed(true)}
-            />
-          )}
-        </m.a>
-
-        <m.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: INTRO_DELAY - 0.2, ease: EASE }}
-          className="hidden md:flex items-center gap-6"
-        >
-          <form
-            onSubmit={handleSubmit}
-            className="flex items-center border border-white/15 rounded-full px-4 py-2 text-xs text-white/50 bg-white/[0.03] focus-within:border-white/30 transition-colors"
-          >
-            <input
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-transparent outline-none text-white text-xs min-w-[120px] placeholder:text-white/30"
-              aria-label="Email address"
-            />
-            <button
-              type="submit"
-              className="ml-2 text-white/40 hover:text-white transition-colors"
-              aria-label="Subscribe"
-            >
-              <ArrowUpRight className="w-4 h-4" />
-            </button>
-          </form>
-
-          <span className="text-xs uppercase tracking-widest text-white/40">About</span>
-          <span className="text-xs uppercase tracking-widest text-white/40">Projects</span>
-          <span className="text-xs uppercase tracking-widest text-white/40">Contact</span>
-
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="text-white/80 hover:text-white transition-colors focus-visible:outline-none"
-            aria-label="Open menu"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-        </m.div>
-
-        <m.button
-          type="button"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: INTRO_DELAY - 0.2, ease: EASE }}
-          onClick={() => setMobileMenuOpen(true)}
-          className="md:hidden text-white focus-visible:outline-none"
-          aria-label="Open menu"
-        >
-          <Menu className="w-6 h-6" />
-        </m.button>
-      </div>
-
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-xl pt-20 px-6 md:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(false)}
-            className="absolute top-6 right-6 text-white text-2xl focus-visible:outline-none"
-            aria-label="Close menu"
-          >
-            ✕
-          </button>
-          <nav className="flex flex-col gap-6 mt-8">
-            {['About', 'Projects', 'Contact'].map((label) => (
-              <button
-                key={label}
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-white text-lg font-medium transition-colors hover:text-white/70"
-              >
-                {label}
-              </button>
-            ))}
-          </nav>
-          <form
-            onSubmit={handleSubmit}
-            className="mt-8 flex items-center justify-between px-4 py-3 rounded-xl text-sm text-white/80 bg-white/[0.04]"
-          >
-            <input
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-transparent outline-none text-white text-sm flex-1 placeholder:text-white/30"
-              aria-label="Email address"
-            />
-            <button
-              type="submit"
-              aria-label="Send email"
-              className="text-white/60 hover:text-white transition-colors"
-            >
-              <ArrowUpRight className="w-4 h-4" />
-            </button>
-          </form>
-          <div className="mt-2 px-4 py-3 border-t border-white/10 flex items-center justify-between text-xs text-white/50">
-            <span>Follow</span>
-            <span className="flex items-center gap-1 text-white/50">
-              Instagram
-              <Instagram className="w-3.5 h-3.5" />
-            </span>
-          </div>
-        </div>
-      )}
-    </header>
   )
 }
 
@@ -597,7 +455,7 @@ function MechanicalMarvels() {
   const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '-15%'])
 
   return (
-    <section>
+    <section className="relative">
       <div className="relative px-6 md:px-12 pt-28 pb-12 overflow-hidden">
         <StarField count={450} className="absolute inset-0 pointer-events-none" />
         <LineField variant="marvels" />
@@ -725,13 +583,11 @@ function Footer() {
 
 /* ─── Main component ─── */
 export default function ValmaxLanding() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
   return (
     <div className="min-h-screen">
       <LazyMotion features={domAnimation}>
         <IntroSequence />
-        <TopBar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+        <TopBar introDelay={INTRO_DELAY} />
         <RalphHero />
         <OurPhotographer />
         <AllTypes />

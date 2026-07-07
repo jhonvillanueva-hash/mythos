@@ -30,9 +30,10 @@ function RootComponent() {
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html>
+    <html translate="no">
       <head>
         <HeadContent />
+        <meta name="google" content="notranslate" />
       </head>
       <body>
         {children}

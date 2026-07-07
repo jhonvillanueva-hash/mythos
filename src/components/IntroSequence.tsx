@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { LazyMotion, m, domAnimation } from 'framer-motion'
 import logo from '@/assets/logo.svg'
+import noise from '@/assets/noise.png'
+import StarField from './StarField'
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
-const TOTAL_MS = 3600
+const TOTAL_MS = 5000
 const TOTAL_S = TOTAL_MS / 1000
 
 const rayAngles = [0, 30, 60, 120, 150, 210, 240, 300, 330]
@@ -52,6 +54,14 @@ export default function IntroSequence() {
     return () => clearTimeout(t)
   }, [reducedMotion])
 
+  /* Trava scroll só durante a intro; restaura quando hidden muda ou desmonta */
+  useEffect(() => {
+    if (!hidden) {
+      document.body.style.overflow = 'hidden'
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [hidden])
+
   if (hidden) return null
 
   if (reducedMotion) {
@@ -65,142 +75,128 @@ export default function IntroSequence() {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] pointer-events-none">
-      {/* Backdrop */}
-      <m.div
-        className="absolute inset-0"
-        style={{ backgroundColor: 'oklch(0.16 0.004 240)' }}
-        animate={{ opacity: [1, 1, 0] }}
-        transition={{ duration: TOTAL_S, times: [0, 0.82, 1], ease: EASE }}
-      />
+    <LazyMotion features={domAnimation}>
+      <div className="fixed inset-0 z-[100]" style={{ backgroundColor: 'oklch(0.16 0.004 240)' }}>
+        {/* Backdrop */}
+        <m.div
+          className="absolute inset-0"
+          style={{ backgroundColor: 'oklch(0.16 0.004 240)' }}
+          animate={{ opacity: [1, 1, 0] }}
+          transition={{ duration: TOTAL_S, times: [0, 0.88, 1], ease: EASE }}
+        />
 
-      {/* Concentric circles */}
-      {[0, 1, 2].map((i) => {
-        const size = 260 * (i + 1)
-        const delay = (1220 + i * 120) / 1000
-        return (
-          <m.div
-            key={i}
-            className="absolute rounded-full border border-white/10"
-            style={{
-              width: size,
-              height: size,
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-            animate={{
-              opacity: [0, 0.55, 0],
-              scale: [0.15, 1, 1.4],
-            }}
-            transition={{
-              duration: 2.4,
-              delay,
-              times: [0, 0.5, 1],
-              ease: EASE,
-            }}
+        {/* Decoraciones — fade out sincronizado com o logo */}
+        <m.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{ opacity: [1, 1, 0] }}
+          transition={{ duration: TOTAL_S, times: [0, 0.88, 1], ease: EASE }}
+        >
+          <StarField count={300} className="absolute inset-0" />
+
+          <img
+            src={noise}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.08] mix-blend-overlay"
           />
-        )
-      })}
 
-      {/* SVG Rays */}
-      <svg
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="xMidYMid meet"
-        aria-hidden="true"
-      >
-        {rayAngles.map((angle, i) => {
-          const rad = (angle * Math.PI) / 180
-          const x2 = 50 + 60 * Math.cos(rad)
-          const y2 = 50 + 60 * Math.sin(rad)
-          return (
-            <m.line
-              key={i}
-              x1={50}
-              y1={50}
-              x2={x2}
-              y2={y2}
-              stroke="white"
-              strokeWidth={0.12}
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
+        </m.div>
+
+        {/* SVG Rays */}
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          {rayAngles.map((angle, i) => {
+            const rad = (angle * Math.PI) / 180
+            const x2 = 50 + 60 * Math.cos(rad)
+            const y2 = 50 + 60 * Math.sin(rad)
+            return (
+              <m.line
+                key={i}
+                x1={50}
+                y1={50}
+                x2={x2}
+                y2={y2}
+                stroke="white"
+                strokeWidth={0.12}
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{
+                  pathLength: [0, 1, 1],
+                  opacity: [0, 0.65, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  delay: 1.2 + i * 0.05,
+                  times: [0, 0.7, 1],
+                  ease: EASE,
+                }}
+              />
+            )
+          })}
+        </svg>
+
+        {/* White dot — aparece rápido, expande y se funde con el logo */}
+        <m.div
+          className="absolute rounded-full bg-white"
+          style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+          initial={{ opacity: 0, width: 8, height: 8 }}
+          animate={{
+            width: [8, 8, 60, 60, 60],
+            height: [8, 8, 60, 60, 60],
+            opacity: [0, 1, 1, 1, 0],
+          }}
+          transition={{
+            duration: TOTAL_S,
+            times: [0, 0.03, 0.12, 0.3, 1],
+            ease: EASE,
+          }}
+        />
+
+        {/* Logo no centro — fade in, fica visível BASTANTE tempo, fade out SEM movimento */}
+        <m.div
+          className="absolute"
+          style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', transformOrigin: 'center center' }}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: [0, 0, 1, 1, 1, 0],
+          }}
+          transition={{
+            duration: TOTAL_S,
+            /*                     ↓entra ↓visível  ↓começa sair↓fim  */
+            times: [0, 0.12, 0.16, 0.3, 0.88, 1],
+            ease: EASE,
+          }}
+        >
+          <div style={{ width: 268, height: 64 }} className="relative">
+            {/* Wordmark — revela rápido (16-30%), fica full width MUITO tempo, some por fade */}
+            <m.div
+              style={{ overflow: 'hidden', height: 64 }}
+              initial={{ opacity: 0, width: 64 }}
               animate={{
-                pathLength: [0, 1, 1],
-                opacity: [0, 0.65, 0],
+                width: [64, 64, 64, 268, 268, 268],
+                opacity: [0, 0, 1, 1, 1, 0],
               }}
               transition={{
-                duration: 2,
-                delay: 1.2 + i * 0.05,
-                times: [0, 0.7, 1],
+                duration: TOTAL_S,
+                times: [0, 0.12, 0.16, 0.3, 0.88, 1],
                 ease: EASE,
               }}
-            />
-          )
-        })}
-      </svg>
-
-      {/* White dot */}
-      <m.div
-        className="absolute rounded-full bg-white"
-        style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-        animate={{
-          width: [8, 10, 64, 64],
-          height: [8, 10, 64, 64],
-          opacity: [1, 1, 1, 0],
-        }}
-        transition={{
-          duration: TOTAL_S,
-          times: [0, 0.18, 0.4, 1],
-          ease: EASE,
-        }}
-      />
-
-      {/* Logo container */}
-      <m.div
-        className="absolute"
-        animate={{
-          top: ['50%', '50%', '50%', '24px'],
-          left: ['50%', '50%', '50%', '24px'],
-          x: ['-50%', '-50%', '-50%', '0'],
-          y: ['-50%', '-50%', '-50%', '0'],
-          scale: [1, 1, 1, 0.42],
-        }}
-        transition={{
-          duration: TOTAL_S,
-          times: [0, 0.6, 0.82, 1],
-          ease: EASE,
-        }}
-        style={{ transformOrigin: 'center center' }}
-      >
-        {/* The actual logo image rendered at full size, clipped by parent */}
-        <div
-          style={{ width: 268, height: 64 }}
-          className="relative"
-        >
-          {/* Wordmark reveal via width clip */}
-          <m.div
-            style={{ overflow: 'hidden', height: 64 }}
-            animate={{
-              width: [64, 64, 64, 268, 268],
-              opacity: [0, 0, 1, 1, 1],
-            }}
-            transition={{
-              duration: TOTAL_S,
-              times: [0, 0.3, 0.42, 0.78, 1],
-              ease: EASE,
-            }}
-          >
-            {logoFailed ? (
-              <span className="font-display font-black text-white" style={{ fontSize: 48 }}>
-                VALMAX
-              </span>
-            ) : (
-              <LogoImage onError={() => setLogoFailed(true)} />
-            )}
-          </m.div>
-        </div>
-      </m.div>
-    </div>
+            >
+              {logoFailed ? (
+                <span className="font-display font-black text-white" style={{ fontSize: 48 }}>
+                  VALMAX
+                </span>
+              ) : (
+                <LogoImage onError={() => setLogoFailed(true)} />
+              )}
+            </m.div>
+          </div>
+        </m.div>
+      </div>
+    </LazyMotion>
   )
 }
